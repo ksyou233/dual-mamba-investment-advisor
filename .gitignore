@@ -3,6 +3,16 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# FinBERT模型文件 (太大，通过脚本下载)
+models/finbert-tone/
+models/finbert-tone/*.bin
+models/finbert-tone/*.safetensors
+
+# 训练生成的模型文件
+*.pth
+dual_mamba_offline_*.pth
+
 .Python
 build/
 develop-eggs/

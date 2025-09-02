@@ -12,7 +12,8 @@
 multimodal_model/
 ├── README.md                    # 项目说明文档
 ├── MODEL_DOWNLOAD.md            # 模型下载指南
-├── setup_finbert.py             # FinBERT模型自动配置脚本
+├── setup_finbert.py             # FinBERT模型下载脚本
+├── setup_finbert_from_existing.py # FinBERT智能配置脚本 (推荐)
 ├── requirements.txt             # 完整依赖包列表
 ├── requirements_simple.txt      # 精简依赖包列表
 │
@@ -26,7 +27,8 @@ multimodal_model/
 │   ├── README.md               # 模型配置说明
 │   └── finbert-tone/           # FinBERT模型文件 (需要下载)
 │       ├── config.json         # 模型配置
-│       ├── pytorch_model.bin   # 模型权重 (~418MB)
+│       ├── pytorch_model.bin   # 模型权重 (~418MB) [旧格式]
+│       ├── model.safetensors   # 模型权重 (~418MB) [新格式]
 │       ├── tokenizer_config.json # 分词器配置
 │       └── vocab.txt           # 词汇表
 │
@@ -51,6 +53,11 @@ multimodal_model/
     ├── high_risk_portfolio.json # 高风险投资组合
     ├── conservative_portfolio.json # 保守型投资组合
     ├── china_focused_portfolio.json # 中国市场聚焦组合
+    ├── balanced_portfolio.json # 平衡型投资组合
+    ├── distressed_portfolio.json # 困境投资组合
+    ├── extreme_imbalance_portfolio.json # 极度不平衡组合
+    └── training_similar_portfolio.json # 训练样本相似组合
+```
     ├── distressed_portfolio.json # 亏损投资组合
     ├── extreme_imbalance_portfolio.json # 极端不平衡组合
     ├── balanced_portfolio.json # 平衡投资组合
@@ -375,11 +382,17 @@ print(f'✅ FinBERT模型已下载到: {local_path}')
 2. **下载必需文件**到 `models/finbert-tone/` 目录:
    ```
    models/finbert-tone/
-   ├── config.json           # 模型配置文件
-   ├── pytorch_model.bin      # 模型权重文件 (~418MB)
-   ├── tokenizer_config.json  # 分词器配置
-   └── vocab.txt             # 词汇表文件 (~220KB)
+   ├── config.json                # 模型配置文件
+   ├── pytorch_model.bin           # 模型权重文件 (~418MB) [旧格式]
+   ├── model.safetensors          # 模型权重文件 (~418MB) [新格式]
+   ├── tokenizer_config.json      # 分词器配置
+   └── vocab.txt                  # 词汇表文件 (~220KB)
    ```
+   
+   **注意**: 支持两种模型格式:
+   - **旧格式**: pytorch_model.bin
+   - **新格式**: model.safetensors
+   - 只需要其中一种即可
 
 3. **使用Git LFS** (如果从本仓库克隆):
    ```bash
@@ -391,26 +404,39 @@ print(f'✅ FinBERT模型已下载到: {local_path}')
 #### 🔧 验证安装
 
 ```bash
-# 验证模型文件完整性
+# 快速验证模型配置
 python -c "
 import os
-from transformers import AutoTokenizer, AutoModel
+from pathlib import Path
 
-model_path = 'models/finbert-tone'
-required_files = ['config.json', 'pytorch_model.bin', 'vocab.txt', 'tokenizer_config.json']
-
+model_path = Path('models/finbert-tone')
 print('🔍 检查FinBERT模型文件...')
-missing_files = [f for f in required_files if not os.path.exists(os.path.join(model_path, f))]
 
-if missing_files:
-    print(f'❌ 缺少文件: {missing_files}')
-    print('请重新下载模型文件')
+if not model_path.exists():
+    print('❌ models/finbert-tone 目录不存在')
+    exit(1)
+
+# 检查基础文件
+basic_files = ['config.json', 'vocab.txt', 'tokenizer_config.json']
+missing_basic = [f for f in basic_files if not (model_path / f).exists()]
+
+# 检查模型文件 (支持两种格式)
+has_pytorch = (model_path / 'pytorch_model.bin').exists()
+has_safetensors = (model_path / 'model.safetensors').exists()
+
+if missing_basic:
+    print(f'❌ 缺少基础文件: {missing_basic}')
+elif not (has_pytorch or has_safetensors):
+    print('❌ 缺少模型权重文件 (pytorch_model.bin 或 model.safetensors)')
 else:
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
-        model = AutoModel.from_pretrained(model_path)
+        from transformers import AutoTokenizer, AutoModel
+        tokenizer = AutoTokenizer.from_pretrained(str(model_path), local_files_only=True)
+        model = AutoModel.from_pretrained(str(model_path), local_files_only=True)
         print('✅ FinBERT模型配置成功!')
         print(f'📊 模型输出维度: {model.config.hidden_size}')
+        model_format = 'pytorch_model.bin' if has_pytorch else 'model.safetensors'
+        print(f'📁 使用模型格式: {model_format}')
     except Exception as e:
         print(f'❌ 模型加载失败: {e}')
 "
