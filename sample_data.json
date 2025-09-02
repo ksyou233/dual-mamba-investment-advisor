@@ -1,0 +1,46 @@
+[
+    {
+        "content": "美联储宣布维持基准利率不变，市场反应积极，科技股普遍上涨",
+        "quantity": 1500,
+        "proportion": 0.3,
+        "valueAtRisk": -0.018,
+        "beta": 1.15,
+        "daily_volatility": 0.012,
+        "sentiment_score": 0.7,
+        "timestamp": 1693123200,
+        "date": "2023-08-27"
+    },
+    {
+        "content": "中美贸易谈判取得重要进展，投资者信心增强，制造业股票表现强劲",
+        "quantity": 1600,
+        "proportion": 0.32,
+        "valueAtRisk": -0.015,
+        "beta": 1.2,
+        "daily_volatility": 0.010,
+        "sentiment_score": 0.8,
+        "timestamp": 1693209600,
+        "date": "2023-08-28"
+    },
+    {
+        "content": "通胀数据超预期下降，市场预期央行政策将更加宽松",
+        "quantity": 1700,
+        "proportion": 0.34,
+        "valueAtRisk": -0.012,
+        "beta": 1.1,
+        "daily_volatility": 0.008,
+        "sentiment_score": 0.6,
+        "timestamp": 1693296000,
+        "date": "2023-08-29"
+    },
+    {
+        "content": "能源价格大幅下跌，对通胀预期产生积极影响，消费类股票受益",
+        "quantity": 1450,
+        "proportion": 0.29,
+        "valueAtRisk": -0.020,
+        "beta": 0.95,
+        "daily_volatility": 0.014,
+        "sentiment_score": 0.5,
+        "timestamp": 1693382400,
+        "date": "2023-08-30"
+    }
+]
