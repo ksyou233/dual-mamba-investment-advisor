@@ -23,10 +23,10 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# PyTorch模型文件（可选择性忽略）
-*.pth
-*.pt
-!dual_mamba_offline_best.pth
+# PyTorch模型文件（由Git LFS管理）
+# *.pth
+# *.pt
+# 注释掉上面的行，因为现在由Git LFS管理
 
 # 虚拟环境
 .env

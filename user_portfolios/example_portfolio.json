@@ -1,0 +1,42 @@
+[
+  {
+    "currency": "EUR/USD",
+    "quantity": 1000000,
+    "proportion": 0.35,
+    "benefit": 2500,
+    "dailyVolatility": 0.125,
+    "valueAtRisk": "$15,000",
+    "beta": 1.2,
+    "hedgingCost": 0.0015
+  },
+  {
+    "currency": "USD/JPY",
+    "quantity": 2000000,
+    "proportion": 0.45,
+    "benefit": -1200,
+    "dailyVolatility": 0.085,
+    "valueAtRisk": "$25,000",
+    "beta": 0.9,
+    "hedgingCost": 0.0012
+  },
+  {
+    "currency": "GBP/USD",
+    "quantity": 1500000,
+    "proportion": 0.2,
+    "benefit": 800,
+    "dailyVolatility": 0.1,
+    "valueAtRisk": "$12,000",
+    "beta": 1.1,
+    "hedgingCost": 0.0013
+  },
+  {
+    "currency": "RUB/EUR",
+    "quantity": 5000000,
+    "proportion": 0.15,
+    "benefit": 1200,
+    "dailyVolatility": 0.18,
+    "valueAtRisk": "$10,000",
+    "beta": 1.5,
+    "hedgingCost": 0.0020
+  }
+]
