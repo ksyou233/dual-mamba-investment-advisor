@@ -12,6 +12,7 @@
 multimodal_model/
 ├── README.md                    # 项目说明文档
 ├── MODEL_DOWNLOAD.md            # 模型下载指南
+├── setup_finbert.py             # FinBERT模型自动配置脚本
 ├── requirements.txt             # 完整依赖包列表
 ├── requirements_simple.txt      # 精简依赖包列表
 │
@@ -19,6 +20,15 @@ multimodal_model/
 ├── model.py                     # 双Mamba模型架构定义
 ├── train_offline.py             # 离线训练脚本
 ├── investment_advisor.py        # 投资决策推理脚本（终端界面）
+│
+├── 🤖 模型文件目录
+├── models/
+│   ├── README.md               # 模型配置说明
+│   └── finbert-tone/           # FinBERT模型文件 (需要下载)
+│       ├── config.json         # 模型配置
+│       ├── pytorch_model.bin   # 模型权重 (~418MB)
+│       ├── tokenizer_config.json # 分词器配置
+│       └── vocab.txt           # 词汇表
 │
 ├── 📁 数据文件
 ├── sample_data.json            # 训练数据样例
@@ -310,6 +320,128 @@ def generate_advice(decision_result):
 - **市场适应**: 需要定期重训练以适应市场变化
 
 ## 🚀 使用指南
+
+### 0. FinBERT模型配置 (必需)
+
+**⚠️ 重要**: 在使用系统前，必须先配置FinBERT模型，否则系统无法运行。
+
+#### � 一键配置 (最简单)
+
+```bash
+# 运行自动配置脚本
+python setup_finbert.py
+
+# 脚本会自动：
+# 1. 检查Python环境和依赖
+# 2. 创建models/finbert-tone目录
+# 3. 从HuggingFace下载FinBERT模型
+# 4. 验证模型文件完整性
+# 5. 测试模型加载功能
+```
+
+```bash
+# 使用HuggingFace下载
+python -c "
+from transformers import AutoTokenizer, AutoModel
+import os
+
+# 下载模型到项目目录
+model_name = 'yiyanghkust/finbert-tone'
+local_path = 'models/finbert-tone'
+
+# 创建目录
+os.makedirs(local_path, exist_ok=True)
+
+# 下载模型和分词器
+print('📥 正在下载FinBERT模型...')
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModel.from_pretrained(model_name)
+
+# 保存到本地
+tokenizer.save_pretrained(local_path)
+model.save_pretrained(local_path)
+
+print(f'✅ FinBERT模型已下载到: {local_path}')
+"
+```
+
+#### 📥 方法2: 手动下载
+
+1. **访问HuggingFace模型页面**:
+   ```
+   https://huggingface.co/yiyanghkust/finbert-tone
+   ```
+
+2. **下载必需文件**到 `models/finbert-tone/` 目录:
+   ```
+   models/finbert-tone/
+   ├── config.json           # 模型配置文件
+   ├── pytorch_model.bin      # 模型权重文件 (~418MB)
+   ├── tokenizer_config.json  # 分词器配置
+   └── vocab.txt             # 词汇表文件 (~220KB)
+   ```
+
+3. **使用Git LFS** (如果从本仓库克隆):
+   ```bash
+   git clone https://github.com/ksyou233/dual-mamba-investment-advisor.git
+   cd dual-mamba-investment-advisor
+   git lfs pull --include="models/**/*"
+   ```
+
+#### 🔧 验证安装
+
+```bash
+# 验证模型文件完整性
+python -c "
+import os
+from transformers import AutoTokenizer, AutoModel
+
+model_path = 'models/finbert-tone'
+required_files = ['config.json', 'pytorch_model.bin', 'vocab.txt', 'tokenizer_config.json']
+
+print('🔍 检查FinBERT模型文件...')
+missing_files = [f for f in required_files if not os.path.exists(os.path.join(model_path, f))]
+
+if missing_files:
+    print(f'❌ 缺少文件: {missing_files}')
+    print('请重新下载模型文件')
+else:
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        model = AutoModel.from_pretrained(model_path)
+        print('✅ FinBERT模型配置成功!')
+        print(f'📊 模型输出维度: {model.config.hidden_size}')
+    except Exception as e:
+        print(f'❌ 模型加载失败: {e}')
+"
+```
+
+#### 📁 文件路径说明
+
+**项目使用相对路径结构**:
+```python
+# 所有脚本会自动查找以下路径
+models/finbert-tone/          # FinBERT模型目录
+train_data/                   # 训练数据目录  
+user_portfolios/              # 用户测试数据目录
+```
+
+**路径配置代码** (无需修改):
+```python
+# train_offline.py 和 investment_advisor.py 中的路径配置
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, 'models', 'finbert-tone')
+```
+
+#### ⚠️ 常见问题解决
+
+| 问题 | 解决方案 |
+|------|----------|
+| `ModuleNotFoundError: transformers` | `pip install transformers>=4.20.0` |
+| `OSError: Model not found` | 检查models/finbert-tone/目录是否存在且包含所有文件 |
+| `CUDA out of memory` | 使用CPU模式或减小batch_size |
+| 下载速度慢 | 使用国内镜像或科学上网 |
 
 ### 1. 环境设置
 

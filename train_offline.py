@@ -15,7 +15,7 @@ from tqdm import tqdm
 import sys
 
 # 配置
-DATA_PATH = '../train_data/sequence_train_data.json'
+DATA_PATH = 'train_data/sequence_train_data.json'
 BATCH_SIZE = 4  # 大幅降低批次大小，提高数值稳定性
 EPOCHS = 15  # 减少轮数，避免过长训练
 LR = 1e-5  # 进一步降低学习率，确保稳定训练
@@ -33,7 +33,10 @@ class LocalFinBERTEncoder:
     """使用本地FinBERT模型的文本编码器"""
     def __init__(self, model_path=None):
         if model_path is None:
-            model_path = r"d:\Learning\models\finbert-tone\models--yiyanghkust--finbert-tone\snapshots\4921590d3c0c3832c0efea24c8381ce0bda7844b"
+            # 使用相对路径，指向项目内的models目录
+            import os
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            model_path = os.path.join(current_dir, 'models', 'finbert-tone')
         
         print(f"📂 尝试加载本地FinBERT模型: {model_path}")
         

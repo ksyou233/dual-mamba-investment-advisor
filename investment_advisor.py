@@ -21,7 +21,7 @@ class TerminalInvestmentAdvisor:
         self.model = None
         self.text_encoder = None
         self.action_names = ['增持', '减持', '观望']
-        self.data_folder = '../user_portfolios'  # 用户数据文件夹
+        self.data_folder = 'user_portfolios'  # 用户数据文件夹
         self.load_model()
         
     def load_model(self):
