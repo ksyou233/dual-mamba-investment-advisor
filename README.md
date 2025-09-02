@@ -4,35 +4,47 @@
 
 本项目是一个基于深度学习的智能投资决策系统，采用双Mamba架构处理多模态金融数据（文本新闻 + 结构化市场数据），为用户提供个性化的投资建议。系统能够分析用户的投资组合，结合市场新闻和历史数据，输出增持/减持/观望决策以及风险对冲建议。
 
+**当前版本提供终端界面的投资决策系统，支持离线训练和推理，适用于学习研究和小规模投资分析。**
+
 ## 🏗️ 项目结构
 
 ```
 multimodal_model/
 ├── README.md                    # 项目说明文档
-├── requirements.txt             # 依赖包列表
+├── MODEL_DOWNLOAD.md            # 模型下载指南
+├── requirements.txt             # 完整依赖包列表
+├── requirements_simple.txt      # 精简依赖包列表
 │
 ├── 📊 核心模型文件
 ├── model.py                     # 双Mamba模型架构定义
 ├── train_offline.py             # 离线训练脚本
-├── investment_advisor.py        # 投资决策推理脚本
-│
-├── 🧪 辅助工具
-├── simple_advisor.py            # 简化版决策工具
-├── web_advisor.py              # Web界面版本
-├── check_model.py              # 模型健康检查工具
+├── investment_advisor.py        # 投资决策推理脚本（终端界面）
 │
 ├── 📁 数据文件
 ├── sample_data.json            # 训练数据样例
+├── config.ini                  # 配置文件
 ├── .vscode/settings.json       # VS Code配置
 │
 ├── 💾 模型文件 (训练后生成)
-├── dual_mamba_offline_best.pth  # 最佳模型权重
+├── dual_mamba_offline_best.pth  # 最佳模型权重 (推荐使用)
 ├── dual_mamba_offline_final.pth # 最终模型权重
-├── simple_model.pth            # 简化模型权重
-└── dual_mamba_offline_epoch_*.pth # 检查点文件
+└── dual_mamba_offline_epoch_*.pth # 训练检查点文件
 
-../user_portfolios/              # 用户投资组合数据目录
-└── example_portfolio.json      # 用户投资组合示例
+├── 📊 训练数据
+├── train_data/
+│   ├── sequence_train_data.json # 完整训练数据集 (2.4MB)
+│   └── README.md               # 训练数据说明
+│
+└── 🧪 测试数据
+└── user_portfolios/            # 用户投资组合测试数据
+    ├── example_portfolio.json  # 标准混合投资组合
+    ├── high_risk_portfolio.json # 高风险投资组合
+    ├── conservative_portfolio.json # 保守型投资组合
+    ├── china_focused_portfolio.json # 中国市场聚焦组合
+    ├── distressed_portfolio.json # 亏损投资组合
+    ├── extreme_imbalance_portfolio.json # 极端不平衡组合
+    ├── balanced_portfolio.json # 平衡投资组合
+    └── training_similar_portfolio.json # 训练数据相似组合
 ```
 
 ## 🧠 核心算法架构
@@ -303,9 +315,9 @@ def generate_advice(decision_result):
 
 ```bash
 # 安装依赖
-pip install torch transformers numpy pandas flask tqdm
+pip install torch transformers numpy pandas tqdm
 
-# 配置CUDA (可选)
+# 配置CUDA (可选，推荐用于GPU训练)
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
 
@@ -320,26 +332,17 @@ python train_offline.py
 # - 支持断点续训和早期停止
 ```
 
-### 3. 投资决策
+### 3. 投资决策分析
 
 ```bash
-# 分析用户投资组合
+# 分析用户投资组合（终端界面）
 python investment_advisor.py
 
 # 系统会自动：
-# 1. 扫描 ../user_portfolios/ 目录
+# 1. 扫描 user_portfolios/ 目录
 # 2. 加载JSON格式的投资组合数据
 # 3. 生成投资建议和风险评估
-```
-
-### 4. Web界面
-
-```bash
-# 启动Web服务
-python web_advisor.py
-
-# 访问 http://localhost:5000
-# 提供交互式投资决策界面
+# 4. 在终端显示详细分析报告
 ```
 
 ## 📁 数据格式说明
@@ -743,6 +746,36 @@ python web_advisor.py
 ]
 ```
 
+## ✨ 当前实现功能
+
+### 🎯 核心功能
+- ✅ **双Mamba深度学习模型**: 线性复杂度的序列建模
+- ✅ **多模态数据处理**: 文本新闻 + 结构化市场数据融合
+- ✅ **本地FinBERT集成**: 中文金融文本情感分析
+- ✅ **投资决策推理**: 增持/减持/观望三分类决策
+- ✅ **风险评估**: 置信度评分和对冲比例建议
+- ✅ **投资组合分析**: 多维度风险和收益评估
+
+### 🛠️ 技术特性
+- ✅ **数值稳定性优化**: 梯度裁剪、NaN检测、归一化处理
+- ✅ **GPU加速训练**: CUDA支持，批量并行处理
+- ✅ **断点续训**: 自动保存检查点，支持训练中断恢复
+- ✅ **早期停止**: 防止过拟合的智能训练控制
+- ✅ **Git LFS管理**: 大模型文件版本控制和分发
+
+### 🧪 测试与验证
+- ✅ **8种测试场景**: 高风险、保守型、平衡型等多样化投资组合
+- ✅ **完整训练数据**: 5000条序列化金融决策数据
+- ✅ **终端交互界面**: 用户友好的命令行投资顾问
+- ✅ **详细文档**: 完整的使用指南和API说明
+
+### 🚧 计划中功能 (未实现)
+- 🔲 **Web界面**: 基于Flask的Web投资决策平台
+- 🔲 **实时数据接入**: API对接实时金融数据源
+- 🔲 **回测系统**: 历史数据验证投资策略效果
+- 🔲 **多语言支持**: 英文等其他语言的金融文本处理
+- 🔲 **移动端应用**: iOS/Android投资决策应用
+
 ## 🔬 模型性能指标
 
 | 指标 | 数值 | 说明 |
@@ -767,7 +800,7 @@ python web_advisor.py
 - ✅ 实现离线训练流水线
 - ✅ 添加数值稳定性优化
 - ✅ 完成投资组合分析功能
-- ✅ 提供终端和Web两种交互方式
+- ✅ 提供终端界面投资决策系统
 
 ## 👥 贡献指南
 
