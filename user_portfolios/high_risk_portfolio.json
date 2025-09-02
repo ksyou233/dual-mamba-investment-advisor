@@ -1,0 +1,42 @@
+[
+  {
+    "currency": "BTC/USD",
+    "quantity": 50000,
+    "proportion": 0.40,
+    "benefit": -15000,
+    "dailyVolatility": 0.45,
+    "valueAtRisk": "$85,000",
+    "beta": 2.8,
+    "hedgingCost": 0.0085
+  },
+  {
+    "currency": "ETH/USD", 
+    "quantity": 200000,
+    "proportion": 0.30,
+    "benefit": -8500,
+    "dailyVolatility": 0.38,
+    "valueAtRisk": "$45,000",
+    "beta": 2.2,
+    "hedgingCost": 0.0070
+  },
+  {
+    "currency": "TRY/USD",
+    "quantity": 8000000,
+    "proportion": 0.20,
+    "benefit": -12000,
+    "dailyVolatility": 0.28,
+    "valueAtRisk": "$32,000",
+    "beta": 1.8,
+    "hedgingCost": 0.0055
+  },
+  {
+    "currency": "ARS/USD",
+    "quantity": 15000000,
+    "proportion": 0.10,
+    "benefit": -5000,
+    "dailyVolatility": 0.35,
+    "valueAtRisk": "$18,000",
+    "beta": 2.1,
+    "hedgingCost": 0.0065
+  }
+]

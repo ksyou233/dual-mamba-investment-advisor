@@ -1,0 +1,22 @@
+[
+  {
+    "currency": "EUR/USD",
+    "quantity": 1,
+    "proportion": 0.000001,
+    "benefit": 0.001,
+    "dailyVolatility": 0.125,
+    "valueAtRisk": "$0.12",
+    "beta": 1.2,
+    "hedgingCost": 0.0015
+  },
+  {
+    "currency": "USD/JPY",
+    "quantity": 50000000000,
+    "proportion": 0.999999,
+    "benefit": 850000,
+    "dailyVolatility": 0.085,
+    "valueAtRisk": "$2,500,000",
+    "beta": 0.9,
+    "hedgingCost": 0.0012
+  }
+]

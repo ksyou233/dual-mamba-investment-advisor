@@ -1,0 +1,32 @@
+[
+  {
+    "currency": "USD/CNY",
+    "quantity": 5000000,
+    "proportion": 0.50,
+    "benefit": 8500,
+    "dailyVolatility": 0.095,
+    "valueAtRisk": "$22,000",
+    "beta": 0.85,
+    "hedgingCost": 0.0018
+  },
+  {
+    "currency": "EUR/CNY",
+    "quantity": 3000000,
+    "proportion": 0.30,
+    "benefit": 4200,
+    "dailyVolatility": 0.11,
+    "valueAtRisk": "$18,500",
+    "beta": 0.95,
+    "hedgingCost": 0.0022
+  },
+  {
+    "currency": "JPY/CNY",
+    "quantity": 180000000,
+    "proportion": 0.20,
+    "benefit": 2800,
+    "dailyVolatility": 0.075,
+    "valueAtRisk": "$12,000",
+    "beta": 0.75,
+    "hedgingCost": 0.0015
+  }
+]

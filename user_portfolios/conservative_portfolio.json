@@ -1,0 +1,42 @@
+[
+  {
+    "currency": "CHF/USD",
+    "quantity": 800000,
+    "proportion": 0.25,
+    "benefit": 1200,
+    "dailyVolatility": 0.045,
+    "valueAtRisk": "$3,500",
+    "beta": 0.4,
+    "hedgingCost": 0.0008
+  },
+  {
+    "currency": "JPY/CHF",
+    "quantity": 120000000,
+    "proportion": 0.30,
+    "benefit": 800,
+    "dailyVolatility": 0.035,
+    "valueAtRisk": "$4,200",
+    "beta": 0.3,
+    "hedgingCost": 0.0006
+  },
+  {
+    "currency": "SGD/USD",
+    "quantity": 1200000,
+    "proportion": 0.25,
+    "benefit": 600,
+    "dailyVolatility": 0.025,
+    "valueAtRisk": "$2,800",
+    "beta": 0.2,
+    "hedgingCost": 0.0005
+  },
+  {
+    "currency": "DKK/EUR",
+    "quantity": 6000000,
+    "proportion": 0.20,
+    "benefit": 400,
+    "dailyVolatility": 0.015,
+    "valueAtRisk": "$1,800",
+    "beta": 0.1,
+    "hedgingCost": 0.0003
+  }
+]

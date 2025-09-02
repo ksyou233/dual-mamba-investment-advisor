@@ -1,0 +1,52 @@
+[
+  {
+    "currency": "EUR/USD",
+    "quantity": 800000,
+    "proportion": 0.15,
+    "benefit": -2500,
+    "dailyVolatility": 0.125,
+    "valueAtRisk": "$15,000",
+    "beta": 1.2,
+    "hedgingCost": 0.0015
+  },
+  {
+    "currency": "USD/JPY", 
+    "quantity": 1800000,
+    "proportion": 0.20,
+    "benefit": -1800,
+    "dailyVolatility": 0.085,
+    "valueAtRisk": "$18,000",
+    "beta": 0.9,
+    "hedgingCost": 0.0012
+  },
+  {
+    "currency": "GBP/USD",
+    "quantity": 1200000,
+    "proportion": 0.18,
+    "benefit": -3200,
+    "dailyVolatility": 0.15,
+    "valueAtRisk": "$22,000",
+    "beta": 1.4,
+    "hedgingCost": 0.0025
+  },
+  {
+    "currency": "AUD/USD",
+    "quantity": 1500000,
+    "proportion": 0.22,
+    "benefit": -4500,
+    "dailyVolatility": 0.18,
+    "valueAtRisk": "$28,000",
+    "beta": 1.6,
+    "hedgingCost": 0.0030
+  },
+  {
+    "currency": "CAD/USD",
+    "quantity": 1800000,
+    "proportion": 0.25,
+    "benefit": -5200,
+    "dailyVolatility": 0.12,
+    "valueAtRisk": "$25,000",
+    "beta": 1.1,
+    "hedgingCost": 0.0018
+  }
+]

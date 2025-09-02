@@ -55,13 +55,13 @@ Thumbs.db
 *.tmp
 *.temp
 
-# 数据文件（大文件）
-/train_data/
-!/train_data/README.md
+# 数据文件（大文件）- 现在由Git LFS管理
+# /train_data/
+# !/train_data/README.md
 
-# 用户私人数据
-/user_portfolios/*.json
-!/user_portfolios/example_portfolio.json
+# 用户私人数据 - 但允许测试数据
+# /user_portfolios/*.json
+# !/user_portfolios/example_portfolio.json
 
 # 模型检查点（除了最佳模型）
 dual_mamba_offline_epoch_*.pth
